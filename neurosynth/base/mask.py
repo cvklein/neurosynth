@@ -19,7 +19,7 @@ class Masker(object):
         if isinstance(volume, string_types):
             volume = nb.load(volume)
         self.volume = volume
-        data = self.volume.get_data()
+        data = self.volume.get_fdata()
         self.dims = data.shape
         self.vox_dims = self.get_header().get_zooms()
         self.full = np.float64(data.ravel())
@@ -111,7 +111,7 @@ class Masker(object):
         if type(image).__module__.startswith('nibabel'):
             if output == 'image':
                 return image
-            image = image.get_data()
+            image = image.get_fdata()
 
         if not type(image).__module__.startswith('numpy'):
             raise ValueError("Input image must be a string, a NiBabel image, "
@@ -229,4 +229,4 @@ class Masker(object):
 
     def get_header(self):
         """ A wrapper for the NiBabel method. """
-        return self.volume.get_header()
+        return self.volume.header
